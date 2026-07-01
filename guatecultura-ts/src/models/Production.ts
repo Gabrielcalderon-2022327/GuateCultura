@@ -1,5 +1,5 @@
-import { ProductionCategory } from "../enums/ProductionCategory";
-import { ProductionVisibility } from "../enums/ProductionVisibility";
+import { ProductionCategory } from "./enums/ProductionCategory";
+import { ProductionVisibility } from "./enums/ProductionVisibility";
 
 export interface Production {
     production_id: number;

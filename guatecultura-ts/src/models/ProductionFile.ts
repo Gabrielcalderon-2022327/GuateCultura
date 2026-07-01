@@ -1,4 +1,4 @@
-import { FileType } from "../enums/FileType";
+import { FileType } from "./enums/FileType";
 
 export interface ProductionFile {
     file_id: number;

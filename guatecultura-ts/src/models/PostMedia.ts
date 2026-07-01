@@ -1,4 +1,4 @@
-import { MediaType } from "../enums/MediaType";
+import { MediaType } from "./enums/MediaType";
 
 export interface PostMedia {
     media_id: number;
