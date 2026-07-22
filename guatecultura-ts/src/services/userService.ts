@@ -10,16 +10,16 @@ export function getUserById(id: number): User | undefined{
     return users.find(u => u.user_id === id);
 }
 
-export function postUser(user: User): void{
+export function createUser(user: User): void{
     users.push(user);
 }
 
-export function putUser(id: number, user: User): boolean {
+export function editUser(id: number, user: User): boolean {
     const userIndex = users.findIndex(u => u.user_id === id);
     if (userIndex === -1){
         return false;
     }
-    users[userIndex] = user;
+    users[userIndex] = { ...user, user_id: id };
     return true;
 }
 
