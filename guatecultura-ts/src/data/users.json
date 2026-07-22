@@ -1,0 +1,112 @@
+[
+    {
+        "user_id": 1,
+        "username": "maria_kaqchikel",
+        "email": "maria.tuyuc@gmail.com",
+        "password": "MariaT2024!",
+        "first_name": "María",
+        "last_name": "Tuyuc",
+        "rol": "CREATOR",
+        "created_at": "2024-01-15T08:23:11Z",
+        "updated_at": "2024-11-02T14:45:33Z"
+    },
+    {
+        "user_id": 2,
+        "username": "carlos_mendoza_gt",
+        "email": "carlos.mendoza@outlook.com",
+        "password": "Chapin1985#",
+        "first_name": "Carlos",
+        "last_name": "Mendoza",
+        "rol": "USER",
+        "created_at": "2024-02-03T19:12:45Z",
+        "updated_at": "2024-02-03T19:12:45Z"
+    },
+    {
+        "user_id": 3,
+        "username": "admin_guatecultura",
+        "email": "admin@guatecultura.gt",
+        "password": "AdminGC_2023*",
+        "first_name": "Ana Lucía",
+        "last_name": "Ramírez",
+        "rol": "ADMIN",
+        "created_at": "2023-11-20T10:00:00Z",
+        "updated_at": "2024-10-15T09:22:18Z"
+    },
+    {
+        "user_id": 4,
+        "username": "diego_marimba",
+        "email": "diego.xicay@yahoo.com",
+        "password": "Marimba456",
+        "first_name": "Diego",
+        "last_name": "Xicay",
+        "rol": "CREATOR",
+        "created_at": "2024-03-18T15:30:22Z",
+        "updated_at": "2024-09-11T18:04:52Z"
+    },
+    {
+        "user_id": 5,
+        "username": "sofia_reads",
+        "email": "sofia.morales88@gmail.com",
+        "password": "LibrosYcafe88",
+        "first_name": "Sofía",
+        "last_name": "Morales",
+        "rol": "USER",
+        "created_at": "2024-04-05T11:47:09Z",
+        "updated_at": "2024-08-22T13:15:44Z"
+    },
+    {
+        "user_id": 6,
+        "username": "pedro_cineasta",
+        "email": "pedro.cinephile@protonmail.com",
+        "password": "Cine_Icaro23",
+        "first_name": "Pedro Antonio",
+        "last_name": "Gutiérrez",
+        "rol": "CREATOR",
+        "created_at": "2024-05-12T20:18:37Z",
+        "updated_at": "2024-11-01T22:30:15Z"
+    },
+    {
+        "user_id": 7,
+        "username": "lucia_arte",
+        "email": "lucia.godoy@icloud.com",
+        "password": "IxchelMaya7",
+        "first_name": "Lucía",
+        "last_name": "Godoy",
+        "rol": "USER",
+        "created_at": "2024-06-01T07:55:12Z",
+        "updated_at": "2024-06-01T07:55:12Z"
+    },
+    {
+        "user_id": 8,
+        "username": "juanjo_poeta",
+        "email": "juanjo.escritor@gmail.com",
+        "password": "VersosDelFuego22",
+        "first_name": "Juan José",
+        "last_name": "Aguilar",
+        "rol": "CREATOR",
+        "created_at": "2024-07-14T14:22:59Z",
+        "updated_at": "2024-10-30T16:41:23Z"
+    },
+    {
+        "user_id": 9,
+        "username": "andrea_gt",
+        "email": "andrea.ovalle@hotmail.com",
+        "password": "LluviaCoban99",
+        "first_name": "Andrea",
+        "last_name": "Ovalle",
+        "rol": "USER",
+        "created_at": "2024-08-22T09:38:41Z",
+        "updated_at": "2024-09-15T11:20:07Z"
+    },
+    {
+        "user_id": 10,
+        "username": "roberto_folklore",
+        "email": "roberto.chavez@gmail.com",
+        "password": "FolkloreGT_10",
+        "first_name": "Roberto",
+        "last_name": "Chávez",
+        "rol": "CREATOR",
+        "created_at": "2024-09-10T17:05:28Z",
+        "updated_at": "2024-11-03T08:14:52Z"
+    }
+]
