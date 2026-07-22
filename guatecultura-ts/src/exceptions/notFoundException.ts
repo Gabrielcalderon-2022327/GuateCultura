@@ -1,6 +1,6 @@
-export class notFoundException extends Error{
-    constructor(message: string){
+export class NotFoundException extends Error {
+    constructor(message: string) {
         super(message);
-        this.name = "notFoundException";
+        this.name = "NotFoundException";
     }
 }

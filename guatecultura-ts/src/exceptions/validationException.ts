@@ -1,6 +1,6 @@
-export class clienteException extends Error{
-    constructor(message: string){
+export class ValidationException extends Error {
+    constructor(message: string) {
         super(message);
-        this.name = "notFoundException";
+        this.name = "ValidationException";
     }
 }
