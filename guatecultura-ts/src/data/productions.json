@@ -1,0 +1,102 @@
+[
+    {
+        "production_id": 1,
+        "FK_creator_id": 1,
+        "title": "Canto a la Milpa",
+        "description": "Canción tradicional kaqchikel interpretada con tzu y voz. Homenaje al ciclo del maíz.",
+        "category": "MUSIC",
+        "visibility": "PUBLIC",
+        "created_at": "2024-02-01T12:00:00Z",
+        "updated_at": "2024-02-01T12:00:00Z"
+    },
+    {
+        "production_id": 2,
+        "FK_creator_id": 2,
+        "title": "Son Chapín No. 3 - 'Xela'",
+        "description": "Composición original para marimba doble inspirada en las calles de Quetzaltenango.",
+        "category": "MUSIC",
+        "visibility": "PUBLIC",
+        "created_at": "2024-04-10T15:45:00Z",
+        "updated_at": "2024-05-02T10:30:00Z"
+    },
+    {
+        "production_id": 3,
+        "FK_creator_id": 3,
+        "title": "Voces del Ixil (Documental completo)",
+        "description": "Documental de 45 minutos sobre las mujeres tejedoras de Nebaj y su resistencia cultural.",
+        "category": "CINEMA",
+        "visibility": "PUBLIC",
+        "created_at": "2024-06-15T09:00:00Z",
+        "updated_at": "2024-08-20T14:22:00Z"
+    },
+    {
+        "production_id": 4,
+        "FK_creator_id": 4,
+        "title": "Versos del Volcán - Capítulo I",
+        "description": "Primer capítulo de mi poemario dedicado al volcán de Fuego. Incluye 7 poemas inéditos.",
+        "category": "LITERATURE",
+        "visibility": "PUBLIC",
+        "created_at": "2024-07-20T18:30:00Z",
+        "updated_at": "2024-07-20T18:30:00Z"
+    },
+    {
+        "production_id": 5,
+        "FK_creator_id": 5,
+        "title": "La leyenda del Sombrerón (Versión Cobán)",
+        "description": "Grabación de audio con la versión q'eqchi' de la leyenda, contada por Don Aurelio Coc.",
+        "category": "LITERATURE",
+        "visibility": "PUBLIC",
+        "created_at": "2024-09-25T11:15:00Z",
+        "updated_at": "2024-09-25T11:15:00Z"
+    },
+    {
+        "production_id": 6,
+        "FK_creator_id": 7,
+        "title": "Microcuentos de la 5a Avenida",
+        "description": "Colección de 12 microcuentos ambientados en la Antigua. Lectura de 15 minutos.",
+        "category": "LITERATURE",
+        "visibility": "DRAFT",
+        "created_at": "2024-10-19T13:00:00Z",
+        "updated_at": "2024-11-02T09:45:00Z"
+    },
+    {
+        "production_id": 7,
+        "FK_creator_id": 9,
+        "title": "Lluvia en Cobán (EP)",
+        "description": "EP de 5 canciones grabadas en vivo desde mi cuarto. Guitarra acústica y voz.",
+        "category": "MUSIC",
+        "visibility": "PUBLIC",
+        "created_at": "2024-10-30T20:00:00Z",
+        "updated_at": "2024-10-30T20:00:00Z"
+    },
+    {
+        "production_id": 8,
+        "FK_creator_id": 3,
+        "title": "Cortometraje: 'El último atol'",
+        "description": "Cortometraje de ficción de 12 minutos sobre un vendedor de atol shuco en la zona 1.",
+        "category": "CINEMA",
+        "visibility": "PRIVATE",
+        "created_at": "2024-11-01T10:00:00Z",
+        "updated_at": "2024-11-01T10:00:00Z"
+    },
+    {
+        "production_id": 9,
+        "FK_creator_id": 1,
+        "title": "Ru'x Ya' (Alma del Agua)",
+        "description": "Álbum conceptual de 8 pistas dedicado al lago de Atitlán y sus leyendas.",
+        "category": "MUSIC",
+        "visibility": "PUBLIC",
+        "created_at": "2024-11-02T14:00:00Z",
+        "updated_at": "2024-11-02T14:00:00Z"
+    },
+    {
+        "production_id": 10,
+        "FK_creator_id": 4,
+        "title": "Cartas a Xelajú (Fragmento)",
+        "description": "Adelanto exclusivo del primer capítulo de mi nueva novela epistolar.",
+        "category": "LITERATURE",
+        "visibility": "PUBLIC",
+        "created_at": "2024-10-25T16:20:00Z",
+        "updated_at": "2024-10-25T16:20:00Z"
+    }
+]
