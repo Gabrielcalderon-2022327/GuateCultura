@@ -6,8 +6,8 @@ const requiredPostFields: (keyof Post)[] = [
     "FK_creator_id", "title"
 ];
 
-export function validatePost(post: Post): void {
+export async function validatePost(post: Post): Promise<void> {
     validateRequiredFields(post, requiredPostFields);
     validateMaxLength(post.title, 100, "title");
-    getCreatorById(post.FK_creator_id);// FK existente
+    await getCreatorById(post.FK_creator_id);// FK existente
 }
