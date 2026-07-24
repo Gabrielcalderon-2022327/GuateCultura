@@ -8,7 +8,7 @@ const requiredProductionFields: (keyof Production)[] = [
     "FK_creator_id", "title", "visibility"
 ];
 
-export function validateProduction(production: Production): void {
+export async function validateProduction(production: Production): Promise<void> {
     validateRequiredFields(production, requiredProductionFields);
     validateMaxLength(production.title, 100, "title");
     validateEnum(production.visibility, ProductionVisibility, "visibility");
@@ -17,5 +17,5 @@ export function validateProduction(production: Production): void {
         validateEnum(production.category, ProductionCategory, "category");
     }
 
-    getCreatorById(production.FK_creator_id); // VALIDAR FK
+    await getCreatorById(production.FK_creator_id); // VALIDAR FK
 }
