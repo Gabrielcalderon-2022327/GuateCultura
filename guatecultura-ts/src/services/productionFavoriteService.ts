@@ -1,33 +1,62 @@
+import { RowDataPacket, ResultSetHeader } from "mysql2";
+import pool from "../config/db";
 import { ProductionFavorite } from "../models/ProductionFavorite";
+import { NotFoundException } from "../exceptions/notFoundException";
+import { validateProductionFavorite } from "../validators/productionFavoriteValidator";
 
-const productionFavorites: ProductionFavorite[] = [];
-
-export function getAllProductionFavorites(): ProductionFavorite[] {
-    return productionFavorites;
+export async function getAllProductionFavorites(): Promise<ProductionFavorite[]> {
+    const [rows] = await pool.query<RowDataPacket[]>("select * from ProductionFavorites");
+    return rows as ProductionFavorite[];
 }
 
-export function getProductionFavoriteById(id: number): ProductionFavorite | undefined {
-    return productionFavorites.find(pf => pf.production_favorite_id === id);
-}
+export async function getProductionFavoriteById(id: number): Promise<ProductionFavorite> {
+    const [rows] = await pool.query<RowDataPacket[]>(
+        "select * from ProductionFavorites where production_favorite_id = ?",
+        [id]
+    );
 
-export function createProductionFavorite(productionFavorite: ProductionFavorite): void {
-    productionFavorites.push(productionFavorite);
-}
-
-export function editProductionFavorite(id: number, productionFavorite: ProductionFavorite): boolean {
-    const productionFavoriteIndex = productionFavorites.findIndex(pf => pf.production_favorite_id === id);
-    if (productionFavoriteIndex === -1) {
-        return false;
+    if (rows.length === 0) {
+        throw new NotFoundException(`Favorito de producción con id ${id} no encontrado`);
     }
-    productionFavorites[productionFavoriteIndex] = { ...productionFavorite, production_favorite_id: id };
-    return true;
+
+    return rows[0] as ProductionFavorite;
 }
 
-export function deleteProductionFavorite(id: number): boolean {
-    const productionFavoriteIndex = productionFavorites.findIndex(pf => pf.production_favorite_id === id);
-    if (productionFavoriteIndex === -1) {
-        return false;
-    }
-    productionFavorites.splice(productionFavoriteIndex, 1);
-    return true;
+export async function createProductionFavorite(productionFavorite: ProductionFavorite): Promise<ProductionFavorite> {
+    await validateProductionFavorite(productionFavorite);
+
+    const [result] = await pool.query<ResultSetHeader>(
+        `insert into ProductionFavorites (FK_user_id, FK_production_id)
+            VALUES (?, ?)`,
+        [
+            productionFavorite.FK_user_id,
+            productionFavorite.FK_production_id
+        ]
+    );
+
+    return await getProductionFavoriteById(result.insertId);
+}
+
+export async function editProductionFavorite(id: number, productionFavorite: ProductionFavorite): Promise<ProductionFavorite> {
+    await getProductionFavoriteById(id);
+    await validateProductionFavorite(productionFavorite);
+
+    await pool.query(
+        `update ProductionFavorites
+            set FK_user_id = ?, FK_production_id = ?
+        where production_favorite_id = ?`,
+        [
+            productionFavorite.FK_user_id,
+            productionFavorite.FK_production_id,
+            id
+        ]
+    );
+
+    return await getProductionFavoriteById(id);
+}
+
+export async function deleteProductionFavorite(id: number): Promise<void> {
+    await getProductionFavoriteById(id);
+
+    await pool.query("delete from ProductionFavorites where production_favorite_id = ?", [id]);
 }
