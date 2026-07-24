@@ -41,7 +41,7 @@ create table ProductionFiles(
     FK_production_id int not null,
     foreign key (FK_production_id) references Productions(production_id) on delete cascade,
 	file_url varchar(500) not null,
-    file_type ENUM("VIDEO", "IMAGE", "PDF", "AUDIO")
+    file_type ENUM("VIDEO", "IMAGE", "PDF", "AUDIO") not null
 );
 
 create table Followers(
@@ -87,8 +87,8 @@ create table PostMedia(
 	media_id int auto_increment not null primary key,
     FK_post_id int not null,
     foreign key (FK_post_id) references Posts(post_id) on delete cascade,
-    media_url varchar(500),
-    media_type ENUM("VIDEO", "IMAGE", "PDF", "AUDIO")
+    media_url varchar(500) not null,
+    media_type ENUM("VIDEO", "IMAGE", "PDF", "AUDIO") not null
 );
 
 create table ProductionLikes(
