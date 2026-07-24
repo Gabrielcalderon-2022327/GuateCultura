@@ -1,21 +1,4 @@
 import { ValidationException } from "../exceptions/validationException";
-import { User } from "../models/User";
-import { Creator } from "../models/Creator";
-import { Production } from "../models/Production";
-import { ProductionFile } from "../models/ProductionFile";
-import { Follower } from "../models/Follower";
-import { Playlist } from "../models/Playlist";
-import { PlaylistItem } from "../models/PlaylistItem";
-import { Post } from "../models/Post";
-import { PostMedia } from "../models/PostMedia";
-import { ProductionLike } from "../models/ProductionLike";
-import { PostLike } from "../models/PostLike";
-import { ProductionComment } from "../models/ProductionComment";
-import { PostComment } from "../models/PostComment";
-import { ProductionFavorite } from "../models/ProductionFavorite";
-import { PostFavorite } from "../models/PostFavorite";
-import { Payment } from "../models/Payment";
-import { Tip } from "../models/Tip";
 
 export function validateRequiredFields<T extends object>( obj: T, requiredFields: (keyof T)[]): void {
     const missingFields: string[] = [];
