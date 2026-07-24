@@ -7,10 +7,10 @@ const requiredPostMediaFields: (keyof PostMedia)[] = [
     "FK_post_id", "media_type", "media_url"
 ];
 
-export function validatePostMedia(postMedia: PostMedia): void {
+export async function validatePostMedia(postMedia: PostMedia): Promise<void> {
     validateRequiredFields(postMedia, requiredPostMediaFields);
     validateEnum(postMedia.media_type, MediaType, "media_type");
-    getPostById(postMedia.FK_post_id);// FK existente
+    await getPostById(postMedia.FK_post_id);// FK existente
 
     // validación pendiente: URL válida de media_url
 }

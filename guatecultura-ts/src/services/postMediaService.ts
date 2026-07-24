@@ -1,33 +1,64 @@
+import { RowDataPacket, ResultSetHeader } from "mysql2";
+import pool from "../config/db";
 import { PostMedia } from "../models/PostMedia";
+import { NotFoundException } from "../exceptions/notFoundException";
+import { validatePostMedia } from "../validators/postMediaValidator";
 
-const postMedias: PostMedia[] = [];
-
-export function getAllPostMedias(): PostMedia[] {
-    return postMedias;
+export async function getAllPostMedias(): Promise<PostMedia[]> {
+    const [rows] = await pool.query<RowDataPacket[]>("select * from PostMedia");
+    return rows as PostMedia[];
 }
 
-export function getPostMediaById(id: number): PostMedia | undefined {
-    return postMedias.find(pm => pm.media_id === id);
-}
+export async function getPostMediaById(id: number): Promise<PostMedia> {
+    const [rows] = await pool.query<RowDataPacket[]>(
+        "select * from PostMedia where media_id = ?",
+        [id]
+    );
 
-export function createPostMedia(postMedia: PostMedia): void {
-    postMedias.push(postMedia);
-}
-
-export function editPostMedia(id: number, postMedia: PostMedia): boolean {
-    const postMediaIndex = postMedias.findIndex(pm => pm.media_id === id);
-    if (postMediaIndex === -1) {
-        return false;
+    if (rows.length === 0) {
+        throw new NotFoundException(`Media de post con id ${id} no encontrado`);
     }
-    postMedias[postMediaIndex] = { ...postMedia, media_id: id };
-    return true;
+
+    return rows[0] as PostMedia;
 }
 
-export function deletePostMedia(id: number): boolean {
-    const postMediaIndex = postMedias.findIndex(pm => pm.media_id === id);
-    if (postMediaIndex === -1) {
-        return false;
-    }
-    postMedias.splice(postMediaIndex, 1);
-    return true;
+export async function createPostMedia(postMedia: PostMedia): Promise<PostMedia> {
+    await validatePostMedia(postMedia);
+
+    const [result] = await pool.query<ResultSetHeader>(
+        `insert into PostMedia (FK_post_id, media_url, media_type)
+            VALUES (?, ?, ?)`,
+        [
+            postMedia.FK_post_id,
+            postMedia.media_url,
+            postMedia.media_type
+        ]
+    );
+
+    return await getPostMediaById(result.insertId);
+}
+
+export async function editPostMedia(id: number, postMedia: PostMedia): Promise<PostMedia> {
+    await getPostMediaById(id);
+    await validatePostMedia(postMedia);
+
+    await pool.query(
+        `update PostMedia
+            set FK_post_id = ?, media_url = ?, media_type = ?
+        where media_id = ?`,
+        [
+            postMedia.FK_post_id,
+            postMedia.media_url,
+            postMedia.media_type,
+            id
+        ]
+    );
+
+    return await getPostMediaById(id);
+}
+
+export async function deletePostMedia(id: number): Promise<void> {
+    await getPostMediaById(id);
+
+    await pool.query("delete from PostMedia where media_id = ?", [id]);
 }
