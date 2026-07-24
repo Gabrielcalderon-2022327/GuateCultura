@@ -1,33 +1,62 @@
+import { RowDataPacket, ResultSetHeader } from "mysql2";
+import pool from "../config/db";
 import { Playlist } from "../models/Playlist";
+import { NotFoundException } from "../exceptions/notFoundException";
+import { validatePlaylist } from "../validators/playlistValidator";
 
-const playlists: Playlist[] = [];
-
-export function getAllPlaylists(): Playlist[] {
-    return playlists;
+export async function getAllPlaylists(): Promise<Playlist[]> {
+    const [rows] = await pool.query<RowDataPacket[]>("select * from Playlists");
+    return rows as Playlist[];
 }
 
-export function getPlaylistById(id: number): Playlist | undefined {
-    return playlists.find(p => p.playlist_id === id);
-}
+export async function getPlaylistById(id: number): Promise<Playlist> {
+    const [rows] = await pool.query<RowDataPacket[]>(
+        "select * from Playlists where playlist_id = ?",
+        [id]
+    );
 
-export function createPlaylist(playlist: Playlist): void {
-    playlists.push(playlist);
-}
-
-export function editPlaylist(id: number, playlist: Playlist): boolean {
-    const playlistIndex = playlists.findIndex(p => p.playlist_id === id);
-    if (playlistIndex === -1) {
-        return false;
+    if (rows.length === 0) {
+        throw new NotFoundException(`Playlist con id ${id} no encontrada`);
     }
-    playlists[playlistIndex] = { ...playlist, playlist_id: id };
-    return true;
+
+    return rows[0] as Playlist;
 }
 
-export function deletePlaylist(id: number): boolean {
-    const playlistIndex = playlists.findIndex(p => p.playlist_id === id);
-    if (playlistIndex === -1) {
-        return false;
-    }
-    playlists.splice(playlistIndex, 1);
-    return true;
+export async function createPlaylist(playlist: Playlist): Promise<Playlist> {
+    await validatePlaylist(playlist);
+
+    const [result] = await pool.query<ResultSetHeader>(
+        `insert into Playlists (FK_user_id, title)
+            VALUES (?, ?)`,
+        [
+            playlist.FK_user_id,
+            playlist.title
+        ]
+    );
+
+    return await getPlaylistById(result.insertId);
+}
+
+export async function editPlaylist(id: number, playlist: Playlist): Promise<Playlist> {
+    await getPlaylistById(id);
+    await validatePlaylist(playlist);
+
+    await pool.query(
+        `update Playlists
+            set FK_user_id = ?, title = ?
+        where playlist_id = ?`,
+        [
+            playlist.FK_user_id,
+            playlist.title,
+            id
+        ]
+    );
+
+    return await getPlaylistById(id);
+}
+
+export async function deletePlaylist(id: number): Promise<void> {
+    await getPlaylistById(id);
+
+    await pool.query("delete from Playlists where playlist_id = ?", [id]);
 }

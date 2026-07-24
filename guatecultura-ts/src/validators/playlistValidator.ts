@@ -6,9 +6,9 @@ const requiredPlaylistFields: (keyof Playlist)[] = [
     "FK_user_id", "title"
 ];
 
-export function validatePlaylist(playlist: Playlist): void {
+export async function validatePlaylist(playlist: Playlist): Promise<void> {
     validateRequiredFields(playlist, requiredPlaylistFields);
     validateMaxLength(playlist.title, 100, "title");
 
-    getUserById(playlist.FK_user_id); // FK existente
+    await getUserById(playlist.FK_user_id); // FK existente
 }
