@@ -7,12 +7,12 @@ const requiredProductionLikeFields: (keyof ProductionLike)[] = [
     "FK_user_id", "FK_production_id"
 ];
 
-export function validateProductionLike(productionLike: ProductionLike): void {
+export async function validateProductionLike(productionLike: ProductionLike): Promise<void> {
     validateRequiredFields(productionLike, requiredProductionLikeFields);
 
     // FKs EXISTENTES
-    getUserById(productionLike.FK_user_id);
-    getProductionById(productionLike.FK_production_id);
+    await getUserById(productionLike.FK_user_id);
+    await getProductionById(productionLike.FK_production_id);
 
     // validación pendiente: unicidad compuesta (FK_user_id + FK_production_id), error DB
 }

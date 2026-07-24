@@ -1,33 +1,62 @@
+import { RowDataPacket, ResultSetHeader } from "mysql2";
+import pool from "../config/db";
 import { ProductionLike } from "../models/ProductionLike";
+import { NotFoundException } from "../exceptions/notFoundException";
+import { validateProductionLike } from "../validators/productionLikeValidator";
 
-const productionLikes: ProductionLike[] = [];
-
-export function getAllProductionLikes(): ProductionLike[] {
-    return productionLikes;
+export async function getAllProductionLikes(): Promise<ProductionLike[]> {
+    const [rows] = await pool.query<RowDataPacket[]>("select * from ProductionLikes");
+    return rows as ProductionLike[];
 }
 
-export function getProductionLikeById(id: number): ProductionLike | undefined {
-    return productionLikes.find(pl => pl.production_like_id === id);
-}
+export async function getProductionLikeById(id: number): Promise<ProductionLike> {
+    const [rows] = await pool.query<RowDataPacket[]>(
+        "select * from ProductionLikes where production_like_id = ?",
+        [id]
+    );
 
-export function createProductionLike(productionLike: ProductionLike): void {
-    productionLikes.push(productionLike);
-}
-
-export function editProductionLike(id: number, productionLike: ProductionLike): boolean {
-    const productionLikeIndex = productionLikes.findIndex(pl => pl.production_like_id === id);
-    if (productionLikeIndex === -1) {
-        return false;
+    if (rows.length === 0) {
+        throw new NotFoundException(`Like de producción con id ${id} no encontrado`);
     }
-    productionLikes[productionLikeIndex] = { ...productionLike, production_like_id: id };
-    return true;
+
+    return rows[0] as ProductionLike;
 }
 
-export function deleteProductionLike(id: number): boolean {
-    const productionLikeIndex = productionLikes.findIndex(pl => pl.production_like_id === id);
-    if (productionLikeIndex === -1) {
-        return false;
-    }
-    productionLikes.splice(productionLikeIndex, 1);
-    return true;
+export async function createProductionLike(productionLike: ProductionLike): Promise<ProductionLike> {
+    await validateProductionLike(productionLike);
+
+    const [result] = await pool.query<ResultSetHeader>(
+        `insert into ProductionLikes (FK_user_id, FK_production_id)
+            VALUES (?, ?)`,
+        [
+            productionLike.FK_user_id,
+            productionLike.FK_production_id
+        ]
+    );
+
+    return await getProductionLikeById(result.insertId);
+}
+
+export async function editProductionLike(id: number, productionLike: ProductionLike): Promise<ProductionLike> {
+    await getProductionLikeById(id);
+    await validateProductionLike(productionLike);
+
+    await pool.query(
+        `update ProductionLikes
+            set FK_user_id = ?, FK_production_id = ?
+        where production_like_id = ?`,
+        [
+            productionLike.FK_user_id,
+            productionLike.FK_production_id,
+            id
+        ]
+    );
+
+    return await getProductionLikeById(id);
+}
+
+export async function deleteProductionLike(id: number): Promise<void> {
+    await getProductionLikeById(id);
+
+    await pool.query("delete from ProductionLikes where production_like_id = ?", [id]);
 }
