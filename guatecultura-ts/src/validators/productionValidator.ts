@@ -12,7 +12,10 @@ export function validateProduction(production: Production): void {
     validateRequiredFields(production, requiredProductionFields);
     validateMaxLength(production.title, 100, "title");
     validateEnum(production.visibility, ProductionVisibility, "visibility");
-    validateEnum(production.category, ProductionCategory, "category")
+    
+    if (production.category !== null && production.category !== undefined) {
+        validateEnum(production.category, ProductionCategory, "category");
+    }
 
     getCreatorById(production.FK_creator_id); // VALIDAR FK
 }
