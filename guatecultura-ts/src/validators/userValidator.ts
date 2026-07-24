@@ -8,7 +8,7 @@ const requiredUserFields: (keyof User)[] = [
     "username", "email", "password", "first_name", "last_name", "rol"
 ];
 
-export function validateUser(user: User, id?: number): void {
+export async function validateUser(user: User, id?: number): Promise<void> {
     validateRequiredFields(user, requiredUserFields);
     validateEmail(user.email);
     validateMinLength(user.password, 8, "password");
@@ -18,7 +18,7 @@ export function validateUser(user: User, id?: number): void {
     validateMaxLength(user.last_name, 100, "last_name");
     validateEnum(user.rol, UserRole, "rol");
 
-    const users = getAllUsers();
+    const users = await getAllUsers();
     const nombreDuplicado = users.some(u => u.username === user.username && u.user_id !== id);
     if (nombreDuplicado) {
         throw new ValidationException(`El nombre de usuario '${user.username}' ya está registrado`);
