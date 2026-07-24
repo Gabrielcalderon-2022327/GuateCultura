@@ -4,7 +4,7 @@ use GuateCultura_in5cm;
 
 create table Users(
 	user_id int auto_increment primary key not null,
-    nombre_usuario varchar(100) not null unique,
+    username varchar(100) not null unique,
     email varchar(100) not null unique,
     password text not null,
     first_name varchar(100) not null,
