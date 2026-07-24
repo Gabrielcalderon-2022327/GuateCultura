@@ -12,7 +12,7 @@ export async function validateFollower(follower: Follower): Promise<void> {
     validateRequiredFields(follower, requiredFollowerFields);
 
     // FKs EXISTENTES
-    getUserById(follower.FK_user_id); 
+    await getUserById(follower.FK_user_id); 
     const creator = await getCreatorById(follower.FK_creator_id);
 
     if (creator.FK_user_id === follower.FK_user_id) {

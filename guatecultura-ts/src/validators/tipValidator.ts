@@ -9,13 +9,13 @@ const requiredTipFields: (keyof Tip)[] = [
     "amount", "FK_creator_id", "FK_payment_id"
 ];
 
-export function validateTip(tip: Tip): void {
+export async function validateTip(tip: Tip): Promise<void> {
     validateRequiredFields(tip, requiredTipFields);
     validatePositiveNumber(tip.amount, "amount");
 
     // FKs EXISTENTES
-    getCreatorById(tip.FK_creator_id);
-    const payment = getPaymentById(tip.FK_payment_id);
+    await getCreatorById(tip.FK_creator_id);
+    const payment = await getPaymentById(tip.FK_payment_id);
 
     // El monto del tip debe coincidir con el del pago
     if (tip.amount !== payment.amount) {
