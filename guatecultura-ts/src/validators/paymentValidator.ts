@@ -11,5 +11,7 @@ export function validatePayment(payment: Payment): void {
     validateRequiredFields(payment, requiredPaymentFields);
     validatePositiveNumber(payment.amount, "amount");
     validateEnum(payment.status, PaymentStatus, "status");
-    getUserById(payment.FK_user_id);
+    if (payment.FK_user_id !== null && payment.FK_user_id !== undefined) {
+        getUserById(payment.FK_user_id);
+    }
 }
