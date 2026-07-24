@@ -7,12 +7,12 @@ const requiredPostCommentFields: (keyof PostComment)[] = [
     "content", "FK_user_id", "FK_post_id"
 ];
 
-export function validatePostComment(postComment: PostComment): void {
+export async function validatePostComment(postComment: PostComment): Promise<void> {
     validateRequiredFields(postComment, requiredPostCommentFields);
     validateMinLength(postComment.content, 1, "content");
     validateMaxLength(postComment.content, 1000, "content");
 
     // FKs EXISTENTES
-    getUserById(postComment.FK_user_id);
-    getPostById(postComment.FK_post_id);
+    await getUserById(postComment.FK_user_id);
+    await getPostById(postComment.FK_post_id);
 }
