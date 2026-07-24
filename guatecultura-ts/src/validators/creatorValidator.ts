@@ -9,14 +9,14 @@ const requiredCreatorFields: (keyof Creator)[] = [
     "FK_user_id"
 ];
 
-export function validateCreator(creator: Creator, id?: number): void {
+export async function validateCreator(creator: Creator, id?: number): Promise<void> {
     validateRequiredFields(creator, requiredCreatorFields);
 
-    const user = getUserById(creator.FK_user_id);
+    const user = await getUserById(creator.FK_user_id);
     if (user.rol !== UserRole.CREATOR) {
         throw new ValidationException(`El usuario asociado debe tener rol CREATOR`);
     }
-    const creators = getAllCreators();
+    const creators = await getAllCreators();
     const usuarioYaEsCreator = creators.some(c => c.FK_user_id === creator.FK_user_id && c.creator_id !== id);
     if (usuarioYaEsCreator) {
         throw new ValidationException(`El usuario con id ${creator.FK_user_id} ya está registrado como creador`);
