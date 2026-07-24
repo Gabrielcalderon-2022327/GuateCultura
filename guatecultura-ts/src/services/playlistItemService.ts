@@ -1,33 +1,62 @@
+import { RowDataPacket, ResultSetHeader } from "mysql2";
+import pool from "../config/db";
 import { PlaylistItem } from "../models/PlaylistItem";
+import { NotFoundException } from "../exceptions/notFoundException";
+import { validatePlaylistItem } from "../validators/playlistItemValidator";
 
-const playlistItems: PlaylistItem[] = [];
-
-export function getAllPlaylistItems(): PlaylistItem[] {
-    return playlistItems;
+export async function getAllPlaylistItems(): Promise<PlaylistItem[]> {
+    const [rows] = await pool.query<RowDataPacket[]>("select * from PlaylistItems");
+    return rows as PlaylistItem[];
 }
 
-export function getPlaylistItemById(id: number): PlaylistItem | undefined {
-    return playlistItems.find(pi => pi.item_id === id);
-}
+export async function getPlaylistItemById(id: number): Promise<PlaylistItem> {
+    const [rows] = await pool.query<RowDataPacket[]>(
+        "select * from PlaylistItems where item_id = ?",
+        [id]
+    );
 
-export function createPlaylistItem(playlistItem: PlaylistItem): void {
-    playlistItems.push(playlistItem);
-}
-
-export function editPlaylistItem(id: number, playlistItem: PlaylistItem): boolean {
-    const playlistItemIndex = playlistItems.findIndex(pi => pi.item_id === id);
-    if (playlistItemIndex === -1) {
-        return false;
+    if (rows.length === 0) {
+        throw new NotFoundException(`Item de playlist con id ${id} no encontrado`);
     }
-    playlistItems[playlistItemIndex] = { ...playlistItem, item_id: id };
-    return true;
+
+    return rows[0] as PlaylistItem;
 }
 
-export function deletePlaylistItem(id: number): boolean {
-    const playlistItemIndex = playlistItems.findIndex(pi => pi.item_id === id);
-    if (playlistItemIndex === -1) {
-        return false;
-    }
-    playlistItems.splice(playlistItemIndex, 1);
-    return true;
+export async function createPlaylistItem(playlistItem: PlaylistItem): Promise<PlaylistItem> {
+    await validatePlaylistItem(playlistItem);
+
+    const [result] = await pool.query<ResultSetHeader>(
+        `insert into PlaylistItems (FK_playlist_id, FK_production_id)
+            VALUES (?, ?)`,
+        [
+            playlistItem.FK_playlist_id,
+            playlistItem.FK_production_id
+        ]
+    );
+
+    return await getPlaylistItemById(result.insertId);
+}
+
+export async function editPlaylistItem(id: number, playlistItem: PlaylistItem): Promise<PlaylistItem> {
+    await getPlaylistItemById(id);
+    await validatePlaylistItem(playlistItem);
+
+    await pool.query(
+        `update PlaylistItems
+            set FK_playlist_id = ?, FK_production_id = ?
+        where item_id = ?`,
+        [
+            playlistItem.FK_playlist_id,
+            playlistItem.FK_production_id,
+            id
+        ]
+    );
+
+    return await getPlaylistItemById(id);
+}
+
+export async function deletePlaylistItem(id: number): Promise<void> {
+    await getPlaylistItemById(id);
+
+    await pool.query("delete from PlaylistItems where item_id = ?", [id]);
 }

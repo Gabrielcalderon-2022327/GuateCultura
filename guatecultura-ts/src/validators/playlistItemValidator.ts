@@ -9,12 +9,12 @@ const requiredPlaylistItemFields: (keyof PlaylistItem)[] = [
     "FK_playlist_id", "FK_production_id"
 ];
 
-export function validatePlaylistItem(playlistItem: PlaylistItem): void {
+export async function validatePlaylistItem(playlistItem: PlaylistItem): Promise<void> {
     validateRequiredFields(playlistItem, requiredPlaylistItemFields);
 
     // FKs EXISTENTES
-    getPlaylistById(playlistItem.FK_playlist_id);
-    const production = getProductionById(playlistItem.FK_production_id);
+    await getPlaylistById(playlistItem.FK_playlist_id);
+    const production = await getProductionById(playlistItem.FK_production_id);
     if (production.visibility === ProductionVisibility.DRAFT) {
         throw new ValidationException(`No se puede agregar una producción en estado DRAFT a una playlist`);
     }
