@@ -8,12 +8,12 @@ const requiredFollowerFields: (keyof Follower)[] = [
     "FK_user_id", "FK_creator_id"
 ];
 
-export function validateFollower(follower: Follower): void {
+export async function validateFollower(follower: Follower): Promise<void> {
     validateRequiredFields(follower, requiredFollowerFields);
 
     // FKs EXISTENTES
     getUserById(follower.FK_user_id); 
-    const creator = getCreatorById(follower.FK_creator_id);
+    const creator = await getCreatorById(follower.FK_creator_id);
 
     if (creator.FK_user_id === follower.FK_user_id) {
         throw new ValidationException(`Un usuario no puede seguirse a sí mismo`);
