@@ -39,5 +39,5 @@ export async function userRouter(req: http.IncomingMessage, res: http.ServerResp
         sendJSON(res, 405, { error: `Método ${method} no permitido` });
         return;
     }
-    throw new NotFoundException(`Ruta "${url}"invalida`);
+    throw new NotFoundException(`Ruta: ${url} invalida`);
 }

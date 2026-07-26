@@ -25,7 +25,7 @@ export async function router( req: http.IncomingMessage, res: http.ServerRespons
             await userRouter(req, res, method, url);
             return;
         }
-        throw new NotFoundException(`Ruta "${url}"invalida`);
+        throw new NotFoundException(`Ruta: ${url} invalida`);
     } catch (error) {
         handleException(res, error)
     } finally {
