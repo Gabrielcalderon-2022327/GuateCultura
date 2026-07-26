@@ -170,4 +170,17 @@ create table Tips(
 	created_at timestamp default current_timestamp
 );
 
+INSERT INTO Users (username, email, password, first_name, last_name, rol) VALUES
+('maria_kaqchikel', 'maria.tuyuc@gmail.com', 'MariaT2024!', 'María', 'Tuyuc', 'CREATOR'),
+('carlos_mendoza_gt', 'carlos.mendoza@outlook.com', 'Chapin1985#', 'Carlos', 'Mendoza', 'CREATOR'),
+('admin_guatecultura', 'admin@guatecultura.gt', 'AdminGC_2023*', 'Ana Lucía', 'Ramírez', 'ADMIN'),
+('diego_marimba', 'diego.xicay@yahoo.com', 'Marimba456', 'Diego', 'Xicay', 'CREATOR'),
+('sofia_reads', 'sofia.morales88@gmail.com', 'LibrosYcafe88', 'Sofía', 'Morales', 'CREATOR'),
+('pedro_cineasta', 'pedro.cinephile@protonmail.com', 'Cine_Icaro23', 'Pedro Antonio', 'Gutiérrez', 'CREATOR'),
+('lucia_arte', 'lucia.godoy@icloud.com', 'IxchelMaya7', 'Lucía', 'Godoy', 'CREATOR'),
+('juanjo_poeta', 'juanjo.escritor@gmail.com', 'VersosDelFuego22', 'Juan José', 'Aguilar', 'CREATOR'),
+('andrea_gt', 'andrea.ovalle@hotmail.com', 'LluviaCoban99', 'Andrea', 'Ovalle', 'CREATOR'),
+('roberto_folklore', 'roberto.chavez@gmail.com', 'FolkloreGT_10', 'Roberto', 'Chávez', 'CREATOR'),
+('fernando_pelaez', 'fersan.pelaez@gmail.com', 'FernandoPass01', 'Fernando', 'Peláez', 'USER'),
+('valeria_marin', 'vale.marin@outlook.com', 'ValeSegura25', 'Valeria', 'Marín', 'USER');
 
