@@ -21,11 +21,11 @@ export async function router( req: http.IncomingMessage, res: http.ServerRespons
     const method = req.method ?? '';
     const url = new URL(req.url ?? '/', 'http://localhost').pathname;
     try {
-        if (url.includes("/api/users")){
+        if (url.startsWith("/api/users")){
             await userRouter(req, res, method, url);
             return;
         }
-        throw new NotFoundException("Ruta invalida");
+        throw new NotFoundException(`Ruta "${url}"invalida`);
     } catch (error) {
         handleException(res, error)
     } finally {

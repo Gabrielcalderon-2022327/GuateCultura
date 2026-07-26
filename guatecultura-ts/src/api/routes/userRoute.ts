@@ -3,6 +3,7 @@ import * as service from "../../services/userService"
 import { sendJSON } from "../../utils/sendJson"
 import { readBody } from "../../utils/readBody";
 import { matchIdRoute } from "../../utils/matchRegex";
+import { NotFoundException } from "../../exceptions/notFoundException";
 
 export async function userRouter(req: http.IncomingMessage, res: http.ServerResponse, method: string, url: string){
     if (url === "/api/users"){
@@ -15,6 +16,7 @@ export async function userRouter(req: http.IncomingMessage, res: http.ServerResp
             sendJSON(res, 201, await service.createUser(user as any))
             return;
         }
+        sendJSON(res, 405, { error: `Método ${method} no permitido` });
     }
 
     const id = matchIdRoute(url, "/api/users");
@@ -33,6 +35,7 @@ export async function userRouter(req: http.IncomingMessage, res: http.ServerResp
             sendJSON(res, 200, {message: `Usuario con id ${id} eliminado!`});
             return;
         }
+        sendJSON(res, 405, { error: `Método ${method} no permitido` });
     }
-    sendJSON(res, 405, { error: `Método ${method} no permitido` });
+    throw new NotFoundException(`Ruta "${url}"invalida`);
 }
