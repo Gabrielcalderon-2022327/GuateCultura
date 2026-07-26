@@ -17,6 +17,7 @@ export async function userRouter(req: http.IncomingMessage, res: http.ServerResp
             return;
         }
         sendJSON(res, 405, { error: `Método ${method} no permitido` });
+        return;
     }
 
     const id = matchIdRoute(url, "/api/users");
@@ -36,6 +37,7 @@ export async function userRouter(req: http.IncomingMessage, res: http.ServerResp
             return;
         }
         sendJSON(res, 405, { error: `Método ${method} no permitido` });
+        return;
     }
     throw new NotFoundException(`Ruta "${url}"invalida`);
 }
