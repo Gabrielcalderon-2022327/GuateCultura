@@ -1,39 +1,39 @@
 import * as http from "http";
-import * as service from "../../services/productionLikeService";
+import * as service from "../../services/postLikeService";
 import { sendJSON } from "../../utils/sendJson";
 import { readBody } from "../../utils/readBody";
 import { matchIdRoute } from "../../utils/matchRegex";
 import { NotFoundException } from "../../exceptions/notFoundException";
 
-export async function productionLikeRouter(req: http.IncomingMessage, res: http.ServerResponse, method: string, url: string) {
-    if (url === "/api/productionLikes") {
+export async function postLikeRouter(req: http.IncomingMessage, res: http.ServerResponse, method: string, url: string) {
+    if (url === "/api/postLikes") {
         if (method === "GET") {
-            sendJSON(res, 200, await service.getAllProductionLikes());
+            sendJSON(res, 200, await service.getAllPostLikes());
             return;
         }
         if (method === "POST") {
-            const productionLike = await readBody(req);
-            sendJSON(res, 201, await service.createProductionLike(productionLike as any));
+            const postLike = await readBody(req);
+            sendJSON(res, 201, await service.createPostLike(postLike as any));
             return;
         }
         sendJSON(res, 405, { error: `Método ${method} no permitido` });
         return;
     }
 
-    const id = matchIdRoute(url, "/api/productionLikes");
+    const id = matchIdRoute(url, "/api/postLikes");
     if (id !== null) {
         if (method === "GET") {
-            sendJSON(res, 200, await service.getProductionLikeById(id));
+            sendJSON(res, 200, await service.getPostLikeById(id));
             return;
         }
         if (method === "PUT") {
-            const productionLike = await readBody(req);
-            sendJSON(res, 200, await service.editProductionLike(id, productionLike as any));
+            const postLike = await readBody(req);
+            sendJSON(res, 200, await service.editPostLike(id, postLike as any));
             return;
         }
         if (method === "DELETE") {
-            await service.deleteProductionLike(id);
-            sendJSON(res, 200, { message: `Like de producción con id ${id} eliminado!` });
+            await service.deletePostLike(id);
+            sendJSON(res, 200, { message: `Like de post con id ${id} eliminado!` });
             return;
         }
         sendJSON(res, 405, { error: `Método ${method} no permitido` });
