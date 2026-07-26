@@ -5,7 +5,7 @@ import { readBody } from "../../utils/readBody";
 import { matchIdRoute } from "../../utils/matchRegex";
 
 export async function userRouter(req: http.IncomingMessage, res: http.ServerResponse, method: string, url: string){
-    if (url === "api/users"){
+    if (url === "/api/users"){
         if (method === "GET"){
         sendJSON(res, 200, await service.getAllUsers());
         return;
@@ -18,8 +18,7 @@ export async function userRouter(req: http.IncomingMessage, res: http.ServerResp
     }
 
     const id = matchIdRoute(url, "/api/users");
-    console.log(id)
-    if (id){
+    if (id !== null){
         if (method === "GET"){
             sendJSON(res, 200, await service.getUserById(id))
             return;
@@ -35,4 +34,5 @@ export async function userRouter(req: http.IncomingMessage, res: http.ServerResp
             return;
         }
     }
+    sendJSON(res, 405, { error: `Método ${method} no permitido` });
 }

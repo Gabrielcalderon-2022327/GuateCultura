@@ -16,7 +16,7 @@ function handleException(res: http.ServerResponse, error: unknown): void {
     }
 }
 
-export async function router(res: http.ServerResponse, req: http.IncomingMessage): Promise<void> {
+export async function router( req: http.IncomingMessage, res: http.ServerResponse): Promise<void> {
     const init = performance.now();
     const method = req.method ?? '';
     const url = new URL(req.url ?? '/', 'http://localhost').pathname;

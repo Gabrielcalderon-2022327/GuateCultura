@@ -5,7 +5,7 @@ const PORT = 3000;
 
 const server = createServer(async (req, res) => {
     try {
-        await router(res, req);
+        await router(req, res);
     } catch (error) {
         console.error('Error interno:', error);
         res.writeHead(500, { 'Content-Type': 'application/json' });
