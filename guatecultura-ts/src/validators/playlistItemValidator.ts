@@ -18,6 +18,4 @@ export async function validatePlaylistItem(playlistItem: PlaylistItem): Promise<
     if (production.visibility === ProductionVisibility.DRAFT) {
         throw new ValidationException(`No se puede agregar una producción en estado DRAFT a una playlist`);
     }
-
-    // validación pendiente: unicidad compuesta (FK_playlist_id + FK_production_id), error de DB
 }

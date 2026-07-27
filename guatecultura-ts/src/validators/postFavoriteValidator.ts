@@ -13,6 +13,4 @@ export async function validatePostFavorite(postFavorite: PostFavorite): Promise<
     // FKs EXISTENTES
     await getUserById(postFavorite.FK_user_id);
     await getPostById(postFavorite.FK_post_id);
-
-    // validación pendiente: unicidad compuesta (FK_user_id + FK_post_id), error DB
 }

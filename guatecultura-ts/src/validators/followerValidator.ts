@@ -18,6 +18,4 @@ export async function validateFollower(follower: Follower): Promise<void> {
     if (creator.FK_user_id === follower.FK_user_id) {
         throw new ValidationException(`Un usuario no puede seguirse a sí mismo`);
     }
-
-    // validación pendiente: unicidad compuesta (FK_user_id + FK_creator_id), error mediante DB
 }

@@ -13,6 +13,4 @@ export async function validateProductionFavorite(productionFavorite: ProductionF
     // FKs EXISTENTES
     await getUserById(productionFavorite.FK_user_id);
     await getProductionById(productionFavorite.FK_production_id);
-
-    // validación pendiente: unicidad compuesta (FK_user_id + FK_production_id), error DB
 }

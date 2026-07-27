@@ -13,6 +13,4 @@ export async function validateProductionLike(productionLike: ProductionLike): Pr
     // FKs EXISTENTES
     await getUserById(productionLike.FK_user_id);
     await getProductionById(productionLike.FK_production_id);
-
-    // validación pendiente: unicidad compuesta (FK_user_id + FK_production_id), error DB
 }
