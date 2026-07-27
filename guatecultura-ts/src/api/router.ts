@@ -19,17 +19,29 @@ import { productionFavoriteRouter } from "./routes/productionFavoriteRoute";
 import { postFavoriteRouter } from "./routes/postFavoriteRoute";
 import { paymentRouter } from "./routes/paymentRoute";
 import { tipRouter } from "./routes/tipRoute";
+import { handleSqlError } from "../utils/sqlErrorHandler";
 
 function handleException(res: http.ServerResponse, error: unknown): void {
     if (error instanceof ValidationException) {
         sendJSON(res, 400, { error: error.message });
-    } else if (error instanceof SyntaxError) {
-        sendJSON(res, 400, { error: 'El body no es JSON válido' });
-    } else if (error instanceof NotFoundException) {
-        sendJSON(res, 404, { error: error.message });
-    } else {
-        throw error;
+        return;
     }
+
+    if (error instanceof SyntaxError) {
+        sendJSON(res, 400, { error: "El body no es JSON válido" });
+        return;
+    }
+
+    if (error instanceof NotFoundException) {
+        sendJSON(res, 404, { error: error.message });
+        return;
+    }
+
+    if (handleSqlError(res, error)) {
+        return;
+    }
+
+    throw error;
 }
 
 export async function router(req: http.IncomingMessage, res: http.ServerResponse): Promise<void> {
