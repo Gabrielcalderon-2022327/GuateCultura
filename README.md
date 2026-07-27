@@ -2,21 +2,6 @@
 
 **GuateCultura** es una plataforma cultural que impulsa el arte y la cultura guatemalteca. Permite a creadores compartir su música, literatura y cine, mientras los usuarios pueden seguirlos, comentar, dar likes, guardar favoritos, crear playlists y apoyar económicamente a través de tips.
 
-## Tabla de Contenidos
-
-- [Características](#-características)
-- [Tecnologías](#-tecnologías)
-- [Arquitectura](#-arquitectura)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Instalación](#-instalación)
-- [Configuración](#-configuración)
-- [Ejecución](#-ejecución)
-- [Endpoints de la API](#-endpoints-de-la-api)
-- [Modelo de Datos](#-modelo-de-datos)
-- [Validaciones](#-validaciones)
-- [Manejo de Errores](#-manejo-de-errores)
-- [Ejemplos de Uso](#-ejemplos-de-uso)
-
 ## Características
 
 - Gestión de usuarios con roles: `USER`, `CREATOR`, `ADMIN`
