@@ -18,7 +18,7 @@ export async function validateTip(tip: Tip): Promise<void> {
     const payment = await getPaymentById(tip.FK_payment_id);
 
     // El monto del tip debe coincidir con el del pago
-    if (tip.amount !== payment.amount) {
+    if (Number(tip.amount) !== Number(payment.amount)) {
         throw new ValidationException(`El monto del tip (${tip.amount}) no coincide con el del pago asociado (${payment.amount})`);
     }
 
