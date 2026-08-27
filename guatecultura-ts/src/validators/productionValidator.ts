@@ -1,0 +1,21 @@
+import { Production } from "../models/Production";
+import {ProductionVisibility } from "../models/enums/ProductionVisibility";
+import { ProductionCategory } from "../models/enums/ProductionCategory";
+import {validateRequiredFields,validateMaxLength,validateEnum} from "./validators";
+import { getCreatorById } from "../services/creatorService";
+
+const requiredProductionFields: (keyof Production)[] = [
+    "FK_creator_id", "title", "visibility"
+];
+
+export async function validateProduction(production: Production): Promise<void> {
+    validateRequiredFields(production, requiredProductionFields);
+    validateMaxLength(production.title, 100, "title");
+    validateEnum(production.visibility, ProductionVisibility, "visibility");
+    
+    if (production.category !== null && production.category !== undefined) {
+        validateEnum(production.category, ProductionCategory, "category");
+    }
+
+    await getCreatorById(production.FK_creator_id); // VALIDAR FK
+}
